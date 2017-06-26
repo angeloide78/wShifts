@@ -1,0 +1,57 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Rol" [(visible)]="display" modal="false" width="900" responsive="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de roles de aplicación. Un rol es un perfil de acceso a la aplicación. Así un rol puede ser "Administrador", que tiene total control de la aplicación, "Supervisor", para supervisar todas las planillas a las que tenga acceso, "RRHH" para gestión de datos de trabajadores, etc. No puede haber códigos ni descripciones de roles repetidos.</h6>
+  <h5>Configuración</h5>
+    <h6>En el grid del mantenimiento de roles están los campos:
+      <ul>
+       <li><span style="color:#FF0000;">Código</span>: Define de forma unívoca a un rol. Dato obligatorio.</li>
+       <li><span style="color:#FF0000;">Descripción</span>: Definición formal de un rol. Dato obligatorio.</li>
+       <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+       <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' el rol podrá usarse, y si tiene valor 'N' no podrá usarse.</li>
+     </ul>
+   </h6>
+  <h5>Uso</h5>
+  <h6>
+    <ul>
+      <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los roles que hay actualmente dados de alta en el sistema.</li>
+      <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de roles.</li>
+      <li><span style="color:#FF0000;">Botón Insertar</span>: Añade un nuevo rol al sistema. Se tiene que incluir obligatoriamente el código y descripción del rol.</li>
+      <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina el rol del sistema. Si el rol tiene asignados recursos o está asignado a usuarios no podrá borrarse.</li>
+      <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+      <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los roles.</li>
+      <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+    </ul>
+  </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1020px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+           <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+           <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

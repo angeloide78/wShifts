@@ -1,0 +1,61 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Jornada teórica" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de jornada teórica. La jornada teórica es la cantidad de horas que tiene que realizar un trabajador en un año natural. Esta jornada anual es necesaria para el control del balance horario del trabajador, que es la diferencia entre las horas trabajadas y el total de jornada anual.</h6>
+  <h5>Configuración</h5>
+    <h6>La jornada anual o teórica se define por centro físico y por año. No puede haber más de una jornada teórica para un mismo año y centro físico. En el grid del mantenimiento de jornada teórica están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Desc. CF</span>: Definición formal del centro físico. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Año</span>: Año en el que se aplica la jornada anual.</li>
+        <li><span style="color:#FF0000;">Horas anuales</span>: Número de horas que tiene que realizar un trabajador en un año natural.</li>
+        <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todas las jornadas anuales dadas de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de la jornada anual.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Se añade una nueva jornada anual. Antes hay que seleccionar el centro fisico.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina una jornada anual.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV todas las jornadas anuales presentes en el grid.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1000px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+          <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+           <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+      <p-toolbar>
+        <p-spinner size="5" [(ngModel)]="anno" [min]="2016" [max]="2099" maxlength="4"></p-spinner>
+        <p-dropdown [options]="cf" [(ngModel)]="cf_sel" [style]="{'vertical-align':'middle','width':'500px'}" filter="filter"></p-dropdown>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

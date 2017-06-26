@@ -1,0 +1,71 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Coberturas de equipo" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de coberturas de servicio para equipos de trabajo. Una cobertura de equipo es la cantidad de trabajadores que se necesitan por cada día de una semana, con el objetivo de que el servicio siempre esté cubierto.</h6>
+  <h5>Configuración</h5>
+    <h6>Una cobertura de equipo se define por el número de trabajadores que se necesitan para cada día de la semana. Se tiene que definir una cobertura por cada equipo, para una fecha de inicio. No puede haber 2 coberturas que empiecen en la misma fecha para un mismo equipo. Tampoco puede haber solapamiento de coberturas. Si se quiere cambiar una cobertura se tendrá que cerrar la actual y crear una nueva en una fecha posterior a la del cierre. En el grid del mantenimiento de coberturas están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">F. inicio</span>: Fecha de inicio de la cobertura de equipo. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">F. fin</span>: Fecha de fin de la cobertura de equipo.</li>
+        <li><span style="color:#FF0000;">Cód. Eq.</span>: Define de forma unívoca el código del equipo de trabajo. Máximo de 5 caracteres. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Desc. Eq.</span>: Definición formal del equipo de trabajo. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Lunes</span>: Nº de trabajadores que se necesitan en lunes para que el servicio esté cubierto.</li>
+        <li><span style="color:#FF0000;">Martes</span>: Nº de trabajadores que se necesitan en martes para que el servicio esté cubierto.</li>
+        <li><span style="color:#FF0000;">Miércoles</span>: Nº de trabajadores que se necesitan en miércoles para que el servicio esté cubierto.</li>
+        <li><span style="color:#FF0000;">Jueves</span>: Nº de trabajadores que se necesitan en jueves para que el servicio esté cubierto.</li>
+        <li><span style="color:#FF0000;">Viernes</span>: Nº de trabajadores que se necesitan en viernes para que el servicio esté cubierto.</li>
+        <li><span style="color:#FF0000;">Sábado</span>: Nº de trabajadores que se necesitan en sábado para que el servicio esté cubierto.</li>
+        <li><span style="color:#FF0000;">Domingo</span>: Nº de trabajadores que se necesitan en domingo para que el servicio esté cubierto.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todas las coberturas dadas de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de la cobertura.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Se añade una nueva cobertura. Antes hay que seleccionar el equipo y la fecha de inicio de cobertura.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina una cobertura.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV todas las coberturas presentes en el grid.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1120px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+          <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+           <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+      <p-toolbar>
+        <p-dropdown [options]="eq" [(ngModel)]="eq_sel" [style]="{'vertical-align':'middle','width':'500px'}" filter="filter"></p-dropdown>
+        <span>Fecha inicio </span><p-calendar styleClass="calendario2" [(ngModel)]="fecha_inicio" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+        <button pButton type="button" icon="fa-calendar"
+        iconPos="left" (click)="insertarFechaFin()" label="Fecha fin"></button>
+        <p-calendar styleClass="calendario2" [showIcon]="true" [(ngModel)]="fecha_fin" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

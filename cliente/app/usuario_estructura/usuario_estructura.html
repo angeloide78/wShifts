@@ -1,0 +1,65 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Usuario - Estructura" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de acceso de usuarios a unidades organizativas. La estructura organizativa es una jerarquía arbórea de dependencia entre unidades organizativas. Un usuario podrá acceder a dichas unidades organizativas siempre que estén ligadas al mismo. Las unidades organizativas a las cuales podrá tener acceso son centros físicos, servicios funcionales y equipos de trabajo. Por defecto si se tiene acceso a un equipo de trabajo se tiene acceso a todos sus puestos de trabajo.</h6>
+  <h5>Configuración</h5>
+    <h6>Un usuario de la aplicación podrá acceder a diferentes unidades organizativas dentro de la estructura siempre que estén asociadas al mismo. Así un usuario podrá tener acceso a un centro físico o varios, a un servicio o varios, o a un equipo o varios. En el grid del mantenimiento de asociación entre usuario y estructura organizativa están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Usuario</span>: Usuario de la aplicación. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Centro físico</span>: Centro físico. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Servicio</span>: Servicio funcional. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Equipo</span>: Equipo de trabajo. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+        <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' la relación entre unidades organizativas estará visible para su uso (el puesto será visible), no estándolo si tiene valor 'N'.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todas las asociaciones entre usuarios y la estructura organizativa dados de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado entre las asociaciones de usuarios con la estructura organizativa.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Se añade una nueva asociación entre un usuario y una o varias unidades organizativas.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina una relación de la estructura organizativa con el usuario.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV todas las relaciones entre usuarios y la estructura organizativa presente en el grid.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1450px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+          <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+           <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+      <p-toolbar>
+        <span>Usuario</span><p-dropdown [options]="usuario" [(ngModel)]="usuario_sel" [style]="{'vertical-align':'middle','width':'200px'}" filter="filter"></p-dropdown>
+        <span>Centro físico</span><p-dropdown [options]="cf" (onChange)="onChangeCF($event)" [(ngModel)]="cf_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+        <span>Servicio</span><p-dropdown [options]="sf" (onChange)="onChangeServicio($event)" [(ngModel)]="sf_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+        <span>Equipo</span><p-dropdown [options]="eq" [(ngModel)]="eq_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

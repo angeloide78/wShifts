@@ -1,0 +1,22 @@
+<div>
+  <div class="main" style="font-size:25px;text-align:center">
+    <i class="fa fa-puzzle-piece" aria-hidden="true" style="color:#FFFFFF;text-align:center;"></i>
+    <span style="color:#FFFFFF;">wShifts [ {{ title }} ]</span>
+    <div class="ui-toolbar-group-right">
+      <i class="fa fa-user-o" aria-hidden="true" style="color:#FFFFFF;"></i>
+      <span *ngIf="usuario != null" style="color:#FFFFFF;"> {{ usuario }} </span>
+    </div>
+  </div>
+  <nav>
+    <ul class="topnav">
+      <li><a style="float:left;" class="active" [routerLink]="['/login']">Login</a></li>
+      <li><a style="float:left;" [routerLink]="['/seguridad']">Seguridad</a></li>
+      <li><a style="float:left;" [routerLink]="['/configuracion']">Configuración</a></li>
+      <li><a style="float:left;" [routerLink]="['/rrhh']">Trabajadores</a></li>
+      <li><a style="float:left;" [routerLink]="['/planilla']">Planilla</a></li>
+      <li><a style="float:right" [routerLink]="['/manual']">Ayuda</a></li>
+      <li><a style="float:right;border-left: 1px solid #bbb;" [routerLink]="['/acercade']">Acerca de</a></li>
+    </ul>
+  </nav>
+  <router-outlet></router-outlet>
+</div>

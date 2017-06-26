@@ -1,0 +1,104 @@
+/*
+
+ALGG 14-01-2017 Definición de clase PlanificacionDiaria.
+
+*/
+"use strict";
+var PlanificacionDiaria = (function () {
+    function PlanificacionDiaria(id, nombre_completo, contrato_id, titulo, tarea_id, persona_id, nombre, ape1, ape2, dni, tlfno1, mes, anno, puesto_id, puesto_cod, puesto_desc, fecha_inicio, ciclo_master_id, fecha_fin, total_dias, semana, dia1, dia2, dia3, dia4, dia5, dia6, dia7, dia8, dia9, dia10, dia11, dia12, dia13, dia14, dia15, dia16, dia17, dia18, dia19, dia20, dia21, dia22, dia23, dia24, dia25, dia26, dia27, dia28, dia29, dia30, dia31, dia1_aus, dia2_aus, dia3_aus, dia4_aus, dia5_aus, dia6_aus, dia7_aus, dia8_aus, dia9_aus, dia10_aus, dia11_aus, dia12_aus, dia13_aus, dia14_aus, dia15_aus, dia16_aus, dia17_aus, dia18_aus, dia19_aus, dia20_aus, dia21_aus, dia22_aus, dia23_aus, dia24_aus, dia25_aus, dia26_aus, dia27_aus, dia28_aus, dia29_aus, dia30_aus, dia31_aus, es_lunes_festivo, es_martes_festivo, es_miercoles_festivo, es_jueves_festivo, es_viernes_festivo, es_sabado_festivo, es_domingo_festivo, turno_libre_id) {
+        this.id = id;
+        this.nombre_completo = nombre_completo;
+        this.contrato_id = contrato_id;
+        this.titulo = titulo;
+        this.tarea_id = tarea_id;
+        this.persona_id = persona_id;
+        this.nombre = nombre;
+        this.ape1 = ape1;
+        this.ape2 = ape2;
+        this.dni = dni;
+        this.tlfno1 = tlfno1;
+        this.mes = mes;
+        this.anno = anno;
+        this.puesto_id = puesto_id;
+        this.puesto_cod = puesto_cod;
+        this.puesto_desc = puesto_desc;
+        this.fecha_inicio = fecha_inicio;
+        this.ciclo_master_id = ciclo_master_id;
+        this.fecha_fin = fecha_fin;
+        this.total_dias = total_dias;
+        this.semana = semana;
+        this.dia1 = dia1;
+        this.dia2 = dia2;
+        this.dia3 = dia3;
+        this.dia4 = dia4;
+        this.dia5 = dia5;
+        this.dia6 = dia6;
+        this.dia7 = dia7;
+        this.dia8 = dia8;
+        this.dia9 = dia9;
+        this.dia10 = dia10;
+        this.dia11 = dia11;
+        this.dia12 = dia12;
+        this.dia13 = dia13;
+        this.dia14 = dia14;
+        this.dia15 = dia15;
+        this.dia16 = dia16;
+        this.dia17 = dia17;
+        this.dia18 = dia18;
+        this.dia19 = dia19;
+        this.dia20 = dia20;
+        this.dia21 = dia21;
+        this.dia22 = dia22;
+        this.dia23 = dia23;
+        this.dia24 = dia24;
+        this.dia25 = dia25;
+        this.dia26 = dia26;
+        this.dia27 = dia27;
+        this.dia28 = dia28;
+        this.dia29 = dia29;
+        this.dia30 = dia30;
+        this.dia31 = dia31;
+        this.dia1_aus = dia1_aus;
+        this.dia2_aus = dia2_aus;
+        this.dia3_aus = dia3_aus;
+        this.dia4_aus = dia4_aus;
+        this.dia5_aus = dia5_aus;
+        this.dia6_aus = dia6_aus;
+        this.dia7_aus = dia7_aus;
+        this.dia8_aus = dia8_aus;
+        this.dia9_aus = dia9_aus;
+        this.dia10_aus = dia10_aus;
+        this.dia11_aus = dia11_aus;
+        this.dia12_aus = dia12_aus;
+        this.dia13_aus = dia13_aus;
+        this.dia14_aus = dia14_aus;
+        this.dia15_aus = dia15_aus;
+        this.dia16_aus = dia16_aus;
+        this.dia17_aus = dia17_aus;
+        this.dia18_aus = dia18_aus;
+        this.dia19_aus = dia19_aus;
+        this.dia20_aus = dia20_aus;
+        this.dia21_aus = dia21_aus;
+        this.dia22_aus = dia22_aus;
+        this.dia23_aus = dia23_aus;
+        this.dia24_aus = dia24_aus;
+        this.dia25_aus = dia25_aus;
+        this.dia26_aus = dia26_aus;
+        this.dia27_aus = dia27_aus;
+        this.dia28_aus = dia28_aus;
+        this.dia29_aus = dia29_aus;
+        this.dia30_aus = dia30_aus;
+        this.dia31_aus = dia31_aus;
+        this.es_lunes_festivo = es_lunes_festivo;
+        this.es_martes_festivo = es_martes_festivo;
+        this.es_miercoles_festivo = es_miercoles_festivo;
+        this.es_jueves_festivo = es_jueves_festivo;
+        this.es_viernes_festivo = es_viernes_festivo;
+        this.es_sabado_festivo = es_sabado_festivo;
+        this.es_domingo_festivo = es_domingo_festivo;
+        this.turno_libre_id = turno_libre_id;
+    }
+    return PlanificacionDiaria;
+}());
+exports.PlanificacionDiaria = PlanificacionDiaria;
+//# sourceMappingURL=planificacion_diaria.js.map

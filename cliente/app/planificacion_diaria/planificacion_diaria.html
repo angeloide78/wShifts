@@ -1,0 +1,74 @@
+<p-growl   [value]="msgs"></p-growl>
+<p-overlayPanel #op [dismissable]="false" [showCloseIcon]="true" [appendTo]="actualTarget">
+  <!--<p-overlayPanel #op [dismissable]="false" [showCloseIcon]="true" (click)="op.show($event, actualTarget)">  -->
+  <contrato_ausencia [contratoSel]="contratoSel"></contrato_ausencia>
+</p-overlayPanel>
+<p-overlayPanel #op2 [showCloseIcon]="true" [appendTo]="actualTarget2">
+  <div style="width: 880px;padding: 1px;">
+      <button pButton type="button" icon="fa-file-excel-o"
+      iconPos="left" (click)="exportarCSV3()" label="Exportar"></button>
+    <ag-grid-ng2 #agGrid3  style="width:90%; height: 100px;font-size:10px;" class="ag-fresh"
+               [gridOptions]="gridOptions3" [rowData] = 'rowData3'>
+    </ag-grid-ng2>
+  </div>
+</p-overlayPanel>
+<p-dialog header="Cobertura de servicio" [(visible)]="display" modal="true" width="400" rezisable="true">
+  <h4> {{ dia_semana_cobertura }}, {{ fecha_cobertura | date: "dd/MM/yyyy"}} </h4>
+  <h4> {{ descuadre }} </h4>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<p-dialog header="Balance horario del trabajador" [(visible)]="display2" modal="true" width="400" rezisable="true">
+  <h4> {{ dia_semana_cobertura }}, {{ fecha_cobertura | date: "dd/MM/yyyy"}} </h4>
+  <h4> {{ descuadre }} </h4>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display2=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div #actualTarget style="align: left;width: 1440px;">
+  <div #actualTarget2 style="align: left;width: 1405px;">
+    <!-- <span *ngIf="contrato_id != null"> {{ trab_sel }}</span> -->
+    <span style="color:#10679F"> {{ trab_sel }} </span>
+  </div>
+  <p-messages [value]="msgs_balance" [closable]="true"></p-messages>
+  <div style="padding: 1px;" class="toolbar">
+    <p-toolbar>
+      <button  pButton type="button" icon="fa-repeat"
+      iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+      <div class="ui-toolbar-group-right">
+        <i class="fa fa-bars"></i>
+        <p-toggleButton (onChange)="handleChange($event)" onLabel="En edición" offLabel="Solo lectura" onIcon="fa-pencil-square-o" offIcon="fa-eye" [(ngModel)]="edicion"></p-toggleButton>
+        <span>Turno</span><p-dropdown [options]="turno" [(ngModel)]="turno_sel" [style]="{'vertical-align':'middle','width':'600px'}" filter="filter"></p-dropdown>
+        <i class="fa fa-bars"></i>
+        <button type="text" icon="fa-user-times" pButton styleClass="ui-button-info" label="Ausencias" (click)="op.show($event, actualTarget)" [disabled]="boton_actualizar"></button>
+        <i class="fa fa-bars"></i>
+        <button pButton type="button" icon="fa-file-excel-o"
+        iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+      </div>
+    </p-toolbar>
+    <p-toolbar>
+      <p-spinner size="5" [(ngModel)]="anno" [min]="2016" [max]="2099" maxlength="4"></p-spinner>
+      <p-dropdown [options]="mes" (onChange)="onChangeMes($event)" [(ngModel)]="mes_sel" [style]="{'vertical-align':'middle','width':'110px'}" filter="filter"></p-dropdown>
+      <div class="ui-toolbar-group-right">
+        <i class="fa fa-bars"></i>
+        <button pButton *ngIf="persona_id != null" type="button" icon="fa-hourglass-end" (click)="op2.show($event, actualTarget2)" (click)="balance()" iconPos="left"  label="Horas del trabajador"></button>
+      </div>
+    </p-toolbar>
+  </div>
+  <ag-grid-ng2 #agGrid  style="width: 100%; height: 300px;font-size: 9px;" class="ag-fresh"
+               [gridOptions]="gridOptions" [rowData] = 'rowData'
+               (cellValueChanged)="onCellValueChanged($event)"
+               (cellDoubleClicked)="onCellDoubleClicked($event)"
+               (rowClicked)="onRowClicked($event)">
+  </ag-grid-ng2>
+  <ag-grid-ng2 #agGrid2  style="width: 100%; height: 35px;font-size: 12px;" class="ag-fresh"
+               [gridOptions]="gridOptions2" [rowData] = 'rowData2'
+               (cellClicked)="onCellClicked2($event)">
+  </ag-grid-ng2>
+</div>

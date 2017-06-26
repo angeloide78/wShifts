@@ -1,0 +1,39 @@
+<p-growl [value]="msgs"></p-growl>
+<p-toolbar>
+  <span style="color:3393FF;">NRP: </span><input type="text" size="5" disabled="true" pInputText [(ngModel)]="id"/>
+  <span style="color:3393FF;">Nombre: </span><input type="text" size="20" disabled="true" pInputText [(ngModel)]="nombre"/>
+  <span style="color:3393FF;">1er. Apellido: </span><input type="text" size="20" disabled="true" pInputText [ngModel]="ape1"/>
+  <span style="color:3393FF;">2do. Apellido: </span><input type="text" size="20" disabled="true" pInputText [ngModel]="ape2"/>
+  <span style="color:3393FF;">Documento: </span><input type="text" size="8" disabled="true" pInputText [ngModel]="dni"/>
+</p-toolbar>
+<p-accordion>
+    <p-accordionTab header="Trabajadores">
+      <p-panel header="Datos personales de los trabajadores"  class='widget_horizontal'>
+        <trabajadores></trabajadores>
+      </p-panel>
+    </p-accordionTab>
+    <p-accordionTab header="Contratos">
+      <p-tabView>
+        <p-tabPanel header="Buscar trabajador" leftIcon="fa-search">
+          <p-panel header="Selección de trabajador"  class='widget_horizontal'>
+            <buscar_persona (OnPerSel)="OnPerSel($event)"></buscar_persona>
+          </p-panel>
+        </p-tabPanel>
+        <p-tabPanel header="Trabajador" leftIcon="fa-address-card-o" [disabled]="visualizar_disabled">
+          <p-panel header="Datos personales del trabajador"  class='widget_horizontal'>
+            <persona [perSel]="perSel"></persona>
+          </p-panel>
+        </p-tabPanel>
+        <p-tabPanel header="Servicios previos" leftIcon="fa-spinner" [disabled]="visualizar_disabled">
+          <p-panel header="Servicios previos del trabajador"  class='widget_horizontal'>
+            <servicios_previos [perSel]="perSel"></servicios_previos>
+          </p-panel>
+        </p-tabPanel>
+        <p-tabPanel header="Contratos" leftIcon="fa-handshake-o" [disabled]="visualizar_disabled">
+          <p-panel header="Contratos del trabajador"  class='widget_horizontal'>
+            <contrato [perSel]="perSel"></contrato>
+          </p-panel>
+        </p-tabPanel>
+      </p-tabView>
+    </p-accordionTab>
+</p-accordion>

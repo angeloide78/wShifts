@@ -1,0 +1,48 @@
+<p-growl [value]="msgs"></p-growl>
+<p-dialog header="Visualización de planificación de puestos" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Visualización de expansión de ciclos asociados a puestos de trabajo en un calendario laboral. Se muestra para un mes de un año específico, los puestos planificados de un equipo de trabajo que tiene que ser previamente seleccionado.</h6>
+  <h5>Configuración</h5>
+    <h6>A partir de la selección de equipo, mes y año, y la forma de mostrar la planificación, se muestra la expansión en el calendario laboral de los ciclos asociados a los puestos que dependen del equipo de trabajo seleccionado.
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todas las planificaciones de los puestos de trabajo que dependen del equipo de trabajo seleccionado.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV las planificaciones presentes en el grid.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="align: center;width: 1443px;">
+  <div style="padding: 1px;" class="toolbar">
+    <p-toolbar>
+      <button pButton type="button" icon="fa-repeat"
+      iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+      <div class="ui-toolbar-group-right">
+        <i class="fa fa-bars"></i>
+        <span>Visualización</span><p-dropdown [options]="ver_planilla" [(ngModel)]="ver_planilla_sel" [style]="{'vertical-align':'middle','width':'170px'}" filter="filter"></p-dropdown>
+        <i class="fa fa-bars"></i>
+        <button pButton type="button" icon="fa-file-excel-o"
+        iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+      </div>
+    </p-toolbar>
+    <p-toolbar>
+      <p-spinner size="5" [(ngModel)]="anno" [min]="2016" [max]="2099" maxlength="4"></p-spinner>
+      <p-dropdown [options]="mes" (onChange)="onChangeMes($event)" [(ngModel)]="mes_sel" [style]="{'vertical-align':'middle','width':'110px'}" filter="filter"></p-dropdown>
+      <span>CF</span><p-dropdown (onChange)="onChangeCF($event)" [options]="cf" [(ngModel)]="cf_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+      <span>Servicio</span><p-dropdown (onChange)="onChangeServicio($event)" [options]="sf" [(ngModel)]="sf_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+      <span>Equipo</span><p-dropdown [options]="eq" [(ngModel)]="eq_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+    </p-toolbar>
+  </div>
+  <ag-grid-ng2 #agGrid  style="width: 100%; height: 300px;font-size: 9px;" class="ag-fresh"
+               [gridOptions]="gridOptions" [rowData] = 'rowData'
+               (cellValueChanged)="onCellValueChanged($event)">
+  </ag-grid-ng2>
+</div>

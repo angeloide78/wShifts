@@ -1,0 +1,30 @@
+<p-growl [value]="msgs"></p-growl>
+<div style="align: center;width: 1443px;">
+  <div style="padding: 1px;" class="toolbar">
+    <p-toolbar>
+      <button pButton type="button" icon="fa-repeat"
+      iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+      <div class="ui-toolbar-group-right">
+        <p-spinner size="5" [(ngModel)]="anno" [min]="2016" [max]="2099" maxlength="4"></p-spinner>
+        <span>CF</span><p-dropdown (onChange)="onChangeCF($event)" [options]="cf" [(ngModel)]="cf_sel" [style]="{'vertical-align':'middle','width':'240px'}" filter="filter"></p-dropdown>
+        <span>Servicio</span><p-dropdown (onChange)="onChangeServicio($event)" [options]="sf" [(ngModel)]="sf_sel" [style]="{'vertical-align':'middle','width':'240px'}" filter="filter"></p-dropdown>
+        <span>Equipo</span><p-dropdown [options]="eq" [(ngModel)]="eq_sel" [style]="{'vertical-align':'middle','width':'240px'}" filter="filter"></p-dropdown>
+        <i class="fa fa-bars"></i>
+        <button pButton type="button" icon="fa-file-excel-o"
+        iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+      </div>
+    </p-toolbar>
+    <p-toolbar>
+      <div class="ui-toolbar-group-right">
+        <i class="fa fa-bars"></i>
+        <p-toggleButton (onChange)="handleChangeDesglose($event)" onLabel="Desglosar por turno" offLabel="Desglosar por mes" onIcon="fa-tumblr-square" offIcon="fa-calendar-check-o" [(ngModel)]="desglose"></p-toggleButton>
+        <span>Calcular por</span><p-selectButton (click)="calcularBalance()" [options]="types" [(ngModel)]="selectedType"></p-selectButton>
+      </div>
+    </p-toolbar>
+  </div>
+  <ag-grid-ng2 #agGrid  style="width: 100%; height: 300px;font-size: 16px;" class="ag-fresh"
+               [gridOptions]="gridOptions" [rowData] = 'rowData'
+               (cellValueChanged)="onCellValueChanged($event)">
+  </ag-grid-ng2>
+</div>

@@ -1,0 +1,130 @@
+<div #actualTarget></div>
+<p-growl [value]="msgs"></p-growl>
+<p-dialog header="Asignaciones" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de asignaciones. Una asignación o tarea es la asociación entre un puesto de trabajo y un trabajador entre un rango de fechas. Es decir, es el tiempo que un trabajador estará en un determinado puesto de trabajo dentro de un grupo de trabajo. Esta tarea queda reflejada en la planilla, que es la representación temporal del trabajador en dicho puesto de trabajo en un calendario laboral.</h6>
+  <h5>Configuración</h5>
+    <h6>Una asignación debe de configurarse seleccionando previamente un puesto de trabajo (de los que están disponibles en el grupo de trabajo), y a continuación seleccionando un trabajador a partir de una fecha de disponibilidad. En el grid del mantenimiento de asignaciones están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">C.Puesto</span>: Código del puesto de trabajo.</li>
+        <li><span style="color:#FF0000;">Puesto</span>: Descripción del puesto de trabajo.</li>
+        <li><span style="color:#FF0000;">1er. Ap.</span>: Primer apellido del contrato.</li>
+        <li><span style="color:#FF0000;">2do. Ap.</span>: Segundo apellido del trabajador.</li>
+        <li><span style="color:#FF0000;">Nombre</span>: Nombre del trabajador.</li>
+        <li><span style="color:#FF0000;">DNI</span>: Documento identificativo del trabajador.</li>
+        <li><span style="color:#FF0000;">Tarea desde</span>: Fecha de inicio de asignación.</li>
+        <li><span style="color:#FF0000;">Tarea hasta</span>: Fecha de finalización de asignación.</li>
+        <li><span style="color:#FF0000;">Contrato hasta</span>: Fecha de inicio de contrato.</li>
+        <li><span style="color:#FF0000;">Contrato desde</span>: Fecha de finalización de contrato.</li>
+        <li><span style="color:#FF0000;">Solapado</span>: Valor 'S' indica que la tarea puede solaparse en el tiempo y 'N' el caso contrario.</li>
+        <li><span style="color:#FF0000;">Observaciones</span>: Campo para insertar observaciones a la tarea.</li>
+
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en la asignación.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Inserta una nueva asignación.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Borra las asignaciones seleccionadas.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV las asignaciones.</li>
+        <li><span style="color:#FF0000;">Botón Puesto</span>: A partir de la selección de un puesto en el combo de puestos se cambia el puesto de la asignación seleccionada.</li>
+        <li><span style="color:#FF0000;">Botón Trabajador</span>: Selección del trabajador a asignar. Previamente se tiene que seleccionar la fecha en la que se quiere buscar al trabajador.</li>
+        <li><span style="color:#FF0000;">Botones de fecha Desde y Hasta</span>: Rango de fechas de inicio y fin de la asignación.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<p-dialog header="Ausencias en contratos" [(visible)]="display2" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Opción de mantenimiento de ausencias de trabajadores asignadas a contrato. Un contrato está ligado a un trabajador y dicho trabajador puede tener ausencias, esto es, puede ausentarse de su puesto de trabajo a partir de tener un contrato con la empresa.</h6>
+  <h5>Configuración</h5>
+    <h6>Una ausencia se define como la no realización de un turno de trabajo. El trabajador estará ausente entre un rango de fechas, pudiendo devengar ausencias en años diferentes al actual, como por ejemplo en el caso de tener vacaciones pendientes de un año y disfrutarlas en el siguiente año. En el grid del mantenimiento de ausencias asignadas a contrato están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Cód.</span>: Define de forma unívoca a una ausencia. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Descripción</span>: Definición formal de la ausencia. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Desde</span>: Fecha de inicio de la ausencia. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Hasta</span>: Fecha de finalización de la ausencia. Como máximo será el último día del año de inicio de la ausencia. No se permiten ausencias que empiecen y finalicen en años diferentes. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Año devengo</span>: Año donde se devengan las horas de la ausencia.</li>
+        </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de la ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Añade una nueva ausencia al contrato del trabajador.  cluir obligatoriamente el código y descripción del tipo de ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina el tipo de ausencia del sistema. Si el tipo de ausencia ya está asignado a un contrato no podrá borrarse del sistema. En este caso, si no quiere utilizarlo desactívelo.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los tipos de ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display2=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="align: center;width: 1420px;">
+  <div style="padding: 10px;" class="toolbar">
+    <p-toolbar>
+      <div #actualTarget></div>
+      <p-spinner size="5" [(ngModel)]="anno" [min]="2016" [max]="2099" maxlength="4"></p-spinner>
+      <button pButton type="button" icon="fa-repeat"
+      iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+      <button pButton type="button" icon="fa-floppy-o"
+      iconPos="left" (click)="guardar()" label="Guardar"></button>
+      <button pButton type="button" icon="fa-plus"
+      iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+      <button pButton type="button" icon="fa-minus"
+      iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+      <button pButton type="button" icon="fa-undo"
+      iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+      <div class="ui-toolbar-group-right">
+        <span>Por fecha</span><p-calendar styleClass="calendario2" [(ngModel)]="fecha_busqueda_trab" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+        <button pButton type="button" icon="fa-search" (click)="op.show($event, actualTarget)" iconPos="left" (click)="buscar_trabajador()" label="Trabajador"></button>
+        <p-overlayPanel #op [showCloseIcon]="true">
+          <div style="align: center;width: 1320px;">
+          <div style="padding: 4px;" class="toolbar">
+            <button pButton type="button" icon="fa-file-excel-o"
+            iconPos="left" (click)="exportarCSV2()" label="Exportar"></button>
+         </div>
+          <ag-grid-ng2 #myGrid  style="width:100%; height: 400px;font-size:10px;" class="ag-fresh"
+                       [gridOptions]="gridOptions2" [rowData] = 'rowData2'
+                       (rowSelected)="onRowSelected($event)">
+          </ag-grid-ng2>
+        </div>
+        </p-overlayPanel>
+        <i class="fa fa-bars"></i>
+        <button pButton type="button" icon="fa-file-excel-o"
+        iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+      </div>
+    </p-toolbar>
+    <p-toolbar>
+      <button pButton type="button" icon="fa-key"
+      iconPos="left" (click)="insertarPuesto()" label="Puesto"></button><p-dropdown [options]="puesto" [(ngModel)]="puesto_sel" [style]="{'vertical-align':'middle','width':'300px'}" filter="filter"></p-dropdown>
+      <div class="ui-toolbar-group-right">
+        <i class="fa fa-bars"></i>
+        <button pButton type="button" icon="fa-calendar"
+        iconPos="left" (click)="insertarFechaDesde()" label="Desde"></button>
+        <p-calendar margin="10" styleClass="calendario2" [(ngModel)]="fecha_desde" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+        <button pButton type="button" icon="fa-calendar"
+        iconPos="left" (click)="insertarFechaHasta()" label="Hasta"></button>
+        <p-calendar styleClass="calendario2" [(ngModel)]="fecha_hasta" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+        <i class="fa fa-bars"></i>
+        <span style="color:#10679F;">Trabajador </span><input type="text" size="40" disabled="true" pInputText [(ngModel)]="nombre"/>
+      </div>
+    </p-toolbar>
+  </div>
+  <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;font-size:10px;" class="ag-fresh"
+               [gridOptions]="gridOptions" [rowData] = 'rowData'
+               (cellValueChanged)="onCellValueChanged($event)">
+  </ag-grid-ng2>
+</div>

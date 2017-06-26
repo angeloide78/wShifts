@@ -1,0 +1,57 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Cargos" [(visible)]="display" modal="false" width="900" responsive="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de cargos de puesto de trabajo que se pueden asignar a contratos de trabajadores. Un cargo puede ser "Jefe de almacén", "Supervisor de área", "Repartidor", "Cuidador", etc.</h6>
+  <h5>Configuración</h5>
+    <h6>En el grid del mantenimiento de cargos están los campos:
+      <ul>
+       <li><span style="color:#FF0000;">Código</span>: Define de forma unívoca a un cargo. Dato obligatorio.</li>
+       <li><span style="color:#FF0000;">Descripción</span>: Definición formal de un cargo. Dato obligatorio.</li>
+       <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+       <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' el cargo podrá utilizarse para ser insertado en contratos. Si tiene valor 'N' el cargo no podrá asignarse a ningún contrato.</li>
+     </ul>
+   </h6>
+  <h5>Uso</h5>
+  <h6>
+    <ul>
+      <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los cargos que hay actualmente dados de alta en el sistema.</li>
+      <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de cargos.</li>
+      <li><span style="color:#FF0000;">Botón Insertar</span>: Añade un nuevo cargo al sistema. Se tiene que incluir obligatoriamente el código y descripción del cargo.</li>
+      <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina el cargo del sistema. Si el cargo ya está asignado a un contrato no podrá borrarse del sistema. En este caso, si no quiere utilizarlo desactívelo.</li>
+      <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+      <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los cargos.</li>
+      <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+    </ul>
+  </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1020px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+           <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+           <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

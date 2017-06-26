@@ -1,0 +1,95 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Turno" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de turnos. Un turno se define como la realización de una actividad de trabajo entre un rango de horas continuo. Así un turno puede ser una jornada laboral de 7 horas que comienza a las 7:00 y finaliza a las 15:00. Este turno computará 7 horas de trabajo efectivo. Un turno puede comenzar o terminar en el día actual o en el día siguente a la realización de la actividad. Por ejemplo, un turno de noche puede empezar a las 22:00 del día actual y terminar a las 8:00 del día siguiente. Además un turno puede no contar horas, es decir, es una actividad cuyo cómputo horario es 0 horas, definiendo días de libranza.</h6>
+  <h5>Configuración</h5>
+    <h6>En el grid del mantenimiento de turnos están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Código</span>: Define de forma unívoca un turno. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Descripción</span>: Definición formal del turno. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Comienza en día</span>: Si tiene el valor 'Actual' indica que el turno comienza el día en el que se inserta, entendiendo como tal el que comprende entre las 00:00 y 23:59 horas. Si el valor es 'Siguiente' indica que el turno comienza en un horario posterior a las 23:59 del día actual.</li>
+        <li><span style="color:#FF0000;">Termina en día</span>: Si tiene el valor 'Actual' indica que el turno termina el día en el que se inserta, entendiendo como tal el que comprende entre las 00:00 23:59 horas. Si el valor es 'Siguiente' indica que el turno termina en un horario posterior a las 23:59 del día actual.</li>
+        <li><span style="color:#FF0000;">Hora inicio</span>: Hora de inicio del turno.</li>
+        <li><span style="color:#FF0000;">Hora fin</span>: Hora de finalización del turno.</li>
+        <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' el turno podrá utilizarse en la gestión de ciclos, planificaciones y planillas. Si tiene valor 'N' el turno no estará disponible para su uso.</li>
+        <li><span style="color:#FF0000;">Cuenta horas</span>: Si tiene el valor 'S' el turno tendrá un cómputo de horas que será la diferencia entre la hora fin y hora de inicio. Si tiene valor 'N' el turno no computará horas, es decir, el cómputo total de horas será de 0 horas.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los turnos que hay actualmente dados de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de los turnos.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Añade un nuevo turno al sistema. Se tiene que incluir obligatoriamente el código y descripción del turno.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina el turno del sistema. Si el turno está siendo utilizado en la gestión de ciclos, no podrá borrarse. En este caso, si no quiere utilizarlo desactívelo.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los turnos definidos en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1180px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+           <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+           <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+      <p-toolbar>
+           <div class="ui-toolbar-group-right">
+             <i class="fa fa-bars"></i>
+             <button pButton type="button" icon="fa-clock-o"
+             iconPos="left" (click)="insertar_hora_inicio()" label="Inicio"></button>
+             <p-spinner size="2" [(ngModel)]="hora_inicio" [min]="00" [max]="23"></p-spinner>
+             <span>:</span>
+             <p-spinner size="2" [(ngModel)]="minuto_inicio" [min]="00" [max]="59"></p-spinner>
+             <button pButton type="button" icon="fa-clock-o"
+             iconPos="left" (click)="insertar_hora_fin()" label="Fin"></button>
+             <p-spinner size="2" [(ngModel)]="hora_fin" [min]="00" [max]="23"></p-spinner>
+             <span>:</span>
+             <p-spinner size="2" [(ngModel)]="minuto_fin" [min]="00" [max]="59"></p-spinner>
+          </div>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>
+<!--
+<div style="width: 1000px;">
+    <h2> {{ titulo }} </h2>
+    <div style="padding: 4px;" class="toolbar">
+           <button (click)="recuperar()">Recuperar</button>
+           <button (click)="exportarCSV()">Exportar a CSV</button>
+           <button (click)="guardar()">Guardar</button>
+           <button (click)="insertarFila()">Insertar turno</button>
+           <button (click)="duplicarFila()">Extender turno</button>
+           <button (click)="borrarFilaSeleccionada()">Borrar turno</button>
+           <button (click)="cancelarEdicion()">Cancelar</button>
+
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 130%; height: 1000px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>
+-->

@@ -1,0 +1,46 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<div style="width: 1150px;padding: 1px;">
+  <!--<h4>Ausencias</h4> -->
+    <div> <!-- style="padding: 1px;" class="toolbar"> -->
+      <p-toolbar>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+           <div class="ui-toolbar-group-right">
+             <i class="fa fa-bars"></i>
+             <button pButton type="button" icon="fa-clock-o"
+             iconPos="left" (click)="insertar_hora_inicio()" label="Inicio"></button>
+             <p-spinner size="2" [(ngModel)]="hora_inicio" [min]="00" [max]="23"></p-spinner>
+             <span>:</span>
+             <p-spinner size="2" [(ngModel)]="minuto_inicio" [min]="00" [max]="59"></p-spinner>
+             <button pButton type="button" icon="fa-clock-o"
+             iconPos="left" (click)="insertar_hora_fin()" label="Fin"></button>
+             <p-spinner size="2" [(ngModel)]="hora_fin" [min]="00" [max]="23"></p-spinner>
+             <span>:</span>
+             <p-spinner size="2" [(ngModel)]="minuto_fin" [min]="00" [max]="59"></p-spinner>
+             <i class="fa fa-bars"></i>
+             <button pButton type="button" icon="fa-file-excel-o"
+             iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+         </div>
+      </p-toolbar>
+      <p-toolbar>
+        <button pButton type="button" icon="fa-calendar"
+        iconPos="left" (click)="insertarFechaDesde()" label="Desde"></button>
+        <p-calendar margin="10" styleClass="calendario2" [(ngModel)]="fecha_desde" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+        <button pButton type="button" icon="fa-calendar"
+        iconPos="left" (click)="insertarFechaHasta()" label="Hasta"></button>
+        <p-calendar styleClass="calendario2" [(ngModel)]="fecha_hasta" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+        <button pButton type="button" icon="fa-user-times"
+        iconPos="left" (click)="insertarAusencia()" label="Ausencia"></button><p-dropdown [options]="ausencia" [(ngModel)]="ausencia_sel" [style]="{'vertical-align':'middle','width':'280px'}" filter="filter"></p-dropdown>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 190px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

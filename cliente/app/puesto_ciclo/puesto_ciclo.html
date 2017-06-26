@@ -1,0 +1,88 @@
+<p-growl [value]="msgs"></p-growl>
+<p-dialog header="Ciclos asociados a puestos" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de ciclos asociados a puestos de trabajo. Un puesto de trabajo puede tener asociado uno o varios ciclos semanales de turnos, entendiendo un ciclo como el conjunto de turnos que se repiten en un conjunto de semanas.</h6>
+  <h5>Configuración</h5>
+    <h6>Un puesto puede tener varios ciclos siempre que no empiecen en el mismo día. Un ciclo tiene que asociarse a un puesto de trabajo entre un rango de fechas, no pudiendo solaparse rangos de fechas de varios ciclos. Así un puesto tendrá asociado varios ciclos, cada uno con un rango de fechas diferente, de modo que se planificarán cada uno de los ciclos (expansión del ciclo en el calendario laboral) automáticamente una vez se hayan asociado. En el grid del mantenimiento de ciclos asociados a puestos están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Ciclo</span>: Ciclo que se asociará al puesto de trabajo.</li>
+        <li><span style="color:#FF0000;">Desde</span>: Fecha de inicio de la asociación del ciclo al puesto de trabajo.</li>
+        <li><span style="color:#FF0000;">Hasta</span>: Fecha de finalización de la asociación del ciclo al puesto de trabajo.</li>
+        <li><span style="color:#FF0000;">Semana</span>: Número de semana por la que se quiere que empiece el ciclo. Una vez que se haya guardado el ciclo este campo contendrá la semana siguiente que tocaría una vez terminando el ciclo.</li>
+        <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los ciclos asociados al puesto que se tiene que seleccionar previamente.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado. Si se ha insertado una relación nueva, se ha modificado el rango de fechas de una relación o se ha cambiado el ciclo se planifica automáticamente el ciclo en el calendario laboral. Se puede ver la planificación en la sección <span style="color:#FF0000;">Planificación</span>.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Inserta la relación del ciclo con el puesto. Antes se tienen que seleccionar el puesto, el ciclo y la fecha de inicio y fin.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Borra los ciclos asociados al puesto que se hayan seleccionado en el grid. Además se eliminan las planificaciones generadas por esas relaciones.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV las relaciones entre puestos y ciclos presentes en el grid.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="align: center;width: 1400px;">
+  <div style="padding: 10px;" class="toolbar">
+    <p-toolbar>
+         <button pButton type="button" icon="fa-repeat"
+         iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+         <button pButton type="button" icon="fa-floppy-o"
+         iconPos="left" (click)="guardar()" label="Guardar"></button>
+         <button pButton type="button" icon="fa-plus"
+         iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+         <button pButton type="button" icon="fa-minus"
+         iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+         <button pButton type="button" icon="fa-undo"
+         iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+       <div class="ui-toolbar-group-right">
+         <i class="fa fa-bars"></i>
+         <span>Turno Libre</span><p-dropdown [options]="t" [(ngModel)]="t_sel" [style]="{'vertical-align':'middle','width':'200px'}" filter="filter"></p-dropdown>
+         <i class="fa fa-bars"></i>
+         <button pButton type="button" icon="fa-file-excel-o"
+         iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+         <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+       </div>
+    </p-toolbar>
+    <p-toolbar>
+      <span>CF</span><p-dropdown (onChange)="onChangeCF($event)" [options]="cf" [(ngModel)]="cf_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+      <span>Servicio</span><p-dropdown (onChange)="onChangeServicio($event)" [options]="sf" [(ngModel)]="sf_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+      <span>Equipo</span><p-dropdown (onChange)="onChangeEquipo($event)" [options]="eq" [(ngModel)]="eq_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+      <span>Puesto</span><p-dropdown [options]="p" [(ngModel)]="p_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+    </p-toolbar>
+    <p-toolbar>
+      <!--<button pButton type="button" icon="fa-calendar"
+      iconPos="left" (click)="insertarFechaDesde()" label="Desde"></button>-->
+      <span>Desde</span><p-calendar margin="10" styleClass="calendario2" [(ngModel)]="fecha_desde" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+      <!--<button pButton type="button" icon="fa-calendar"
+      iconPos="left" (click)="insertarFechaHasta()" label="Hasta"></button>-->
+      <span>Hasta</span><p-calendar styleClass="calendario2" [(ngModel)]="fecha_hasta" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+      <span>Ciclo</span><p-dropdown [options]="ciclo" [(ngModel)]="ciclo_sel" [style]="{'vertical-align':'middle','width':'510px'}" filter="filter" (onChange)="cargarCicloSemanal($event)"></p-dropdown>
+      <p-overlayPanel #op>
+        <div style="align: center;width: 450px;">
+        <div style="padding: 4px;" class="toolbar">
+          <button pButton type="button" icon="fa-file-excel-o"
+          iconPos="left" (click)="exportarCSV2()" label="Exportar"></button>
+       </div>
+        <ag-grid-ng2 #myGrid  style="width:100%; height: 200px;" class="ag-fresh"
+                     [gridOptions]="gridOptions2" [rowData] = 'rowData2'>
+        </ag-grid-ng2>
+      </div>
+      </p-overlayPanel>
+      <button type="text" icon="fa-refresh" pButton label="Mostrar" (click)="op.toggle($event)"></button>
+      <span>Semana por la que comienza</span><p-spinner size="7" [(ngModel)]="sem" [min]="1" [max]="999" maxlength="3"></p-spinner>
+    </p-toolbar>
+  </div>
+  <ag-grid-ng2 #agGrid  style="width: 100%; height: 300px;" class="ag-fresh"
+               [gridOptions]="gridOptions" [rowData] = 'rowData'
+               (cellValueChanged)="onCellValueChanged($event)">
+  </ag-grid-ng2>
+</div>

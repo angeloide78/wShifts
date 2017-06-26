@@ -1,0 +1,37 @@
+<p-growl [value]="msgs"></p-growl>
+<p-tabView>
+  <p-tabPanel header="Planilla" leftIcon="fa-file-powerpoint-o">
+    <p-toolbar>
+      <span style="color:#10679F;">Centro Físico</span><p-dropdown (onChange)="onChangeCF($event)" [options]="cf" [(ngModel)]="cf_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+      <span style="color:#10679F;">Servicio</span><p-dropdown (onChange)="onChangeServicio($event)" [options]="sf" [(ngModel)]="sf_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+        <span style="color:#10679F;">Equipo</span><p-dropdown [options]="eq"  (onChange)="onChangeEquipo($event)" [(ngModel)]="eq_sel" [style]="{'vertical-align':'middle','width':'250px'}" filter="filter"></p-dropdown>
+    </p-toolbar>
+    <p-accordion>
+        <p-accordionTab header="Asignaciones">
+          <!--<p-panel header="Asignaciones de trabajadores a puestos"  class='widget_horizontal'>-->
+            <tarea [equipoSel]="equipoSel"></tarea>
+          <!--</p-panel>-->
+        </p-accordionTab>
+        <p-accordionTab header="Planilla">
+          <p-tabView>
+            <!--<p-panel header="Planilla"  class='widget_horizontal'>-->
+              <planificacion_diaria  [equipoSel]="equipoSel"></planificacion_diaria>
+            <!--</p-panel>-->
+          </p-tabView>
+        </p-accordionTab>
+    </p-accordion>
+  </p-tabPanel>
+  <p-tabPanel header="Balance horario" leftIcon="fa-clock-o">
+    <balance></balance>
+  </p-tabPanel>
+  <p-tabPanel header="Planificación de puestos" leftIcon="fa-key">
+    <p-accordion>
+        <p-accordionTab header="Asociación de ciclos a puestos">
+          <puesto_ciclo></puesto_ciclo>
+        </p-accordionTab>
+        <p-accordionTab header="Visualización de planificación de puestos">
+          <planificacion></planificacion>
+        </p-accordionTab>
+    </p-accordion>
+  </p-tabPanel>
+</p-tabView>

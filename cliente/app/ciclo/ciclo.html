@@ -1,0 +1,92 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Ciclos" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de ciclos semanales. Un ciclo o patrón es un conjunto de turnos ordenados que se repiten en un calendario laboral. Así cuando se llegue al último turno del patrón el siguiente será el primer turno de dicho patrón. Por ejemplo un patrón típico de trabajo de 35 horas semanales será el compuesto por 5 turnos de Mañana, de lunes a viernes, y dos turnos que no cuentan horas, para el fin de semana, sábado y domingo: M M M M M L L, donde M es turno de mañana de 8:00 a 15:00 y L es turno de libranza, que no cuenta horas.</h6>
+  <h5>Configuración</h5>
+    <h6>Un ciclo se define como un conjunto ordenado de turnos. Los turnos tienen un orden, de izquierda a derecha. Haciendo 'click' sobre un patrón se puede ver su expansión semanal, así como el cómputo total de horas de dicho ciclo. En el grid del mantenimiento de ciclos están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Código</span>: Define de forma unívoca a un ciclo. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Descripción</span>: Definición formal del ciclo. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Festivo</span>: Si tiene el valor 'N' indica que el patrón no tiene en cuenta los días festivos del calendario laboral, esto es, cuando se planifique sobre un día que es festivo se incluirá el turno del ciclo. Si el valor es 'S' el patrón tendrá en cuenta si los días en el calendario laboral son festivos, y si encuentra un día festivo incluirá un turno que no cuente horas.</li>
+        <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' el ciclo podrá utilizarse para ser planificado en un calendario laboral. Si tiene valor 'N' no podrá usarse para las planificaciones.</li>
+        <li><span style="color:#FF0000;">Ciclo</span>: Es el conjunto de turnos que conforman el ciclo. Los turnos tienen que ir separados por espacios en blanco. Cada turno se define por su código.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los ciclos que hay actualmente dados de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de ciclos.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Añade un nuevo ciclo al sistema. Se tiene que incluir obligatoriamente el código, descripción y patrón.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina el ciclo del sistema, siempre que no esté siendo utilizado en alguna planificación.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los ciclos del sistema.</li>
+        <li><span style="color:#FF0000;">Botón Exportar ciclo</span>: Exporta a un fichero en formato CSV el ciclo semanal.</li>
+
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1020px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+           <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+           <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+   </div>
+   <ag-grid-ng2 #agGrid  style="width: 100%; height: 200px;" class="ag-fresh"
+                [gridOptions]="gridOptions" [rowData] = 'rowData'
+                (cellValueChanged)="onCellValueChanged($event)"
+                (rowClicked)="onRowSelected($event)">
+   </ag-grid-ng2>
+   <div style="padding: 4px;" class="toolbar">
+     <button pButton type="button" icon="fa-file-excel-o"
+     iconPos="left" (click)="exportarCSV2()" label="Exportar ciclo"></button>
+     <span style="color:#10679F" *ngIf="horas_ciclo != null"> Tiempo total del ciclo: {{ horas_ciclo }} horas, {{ minutos_ciclo }} minutos</span>
+  </div>
+   <ag-grid-ng2 #myGrid  style="width: 45%; height: 200px;" class="ag-fresh"
+                [gridOptions]="gridOptions2" [rowData] = 'rowData2'>
+   </ag-grid-ng2>
+</div>
+<!--
+<div style="width: 1000px;">
+    <div style="padding: 4px;" class="toolbar">
+           <button (click)="recuperar()">Recuperar</button>
+           <button (click)="exportarCSV()">Exportar a CSV</button>
+           <button (click)="guardar()">Guardar</button>
+           <button (click)="insertarFila()">Insertar ciclo</button>
+           <button (click)="borrarFilaSeleccionada()">Borrar ciclo</button>
+           <button (click)="cancelarEdicion()">Cancelar</button>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 200px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)"
+                 (rowClicked)="onRowSelected($event)">
+    </ag-grid-ng2>
+    <div style="padding: 4px;" class="toolbar">
+           <button (click)="exportarCSV2()">Exportar a CSV</button>
+   </div>
+    <ag-grid-ng2 #myGrid  style="width: 45%; height: 200px;" class="ag-fresh"
+                 [gridOptions]="gridOptions2" [rowData] = 'rowData2'>
+    </ag-grid-ng2>
+</div>
+-->

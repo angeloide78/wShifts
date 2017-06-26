@@ -1,0 +1,52 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Datos básicos de la aplicación" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de datos básicos de configuración. En este mantenimiento se configuran los días de la semana que actuarán como festivos. Además cabe la posibilidad de personalizar la aplicación incluyendo el nombre de la empresa que hará uso de la misma.</h6>
+  <h5>Configuración</h5>
+    <h6>Se configuran los días que actuarán como festivos y opcionalmente el nombre de la empresa que hará uso y disfrute de esta aplicación. En el grid del mantenimiento de datos básicos están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Empresa cliente</span>: Nombre de la empresa que hará uso y disfrute del aplicativo.</li>
+        <li><span style="color:#FF0000;">Lunes festivo</span>: Valor 'S' si el día de la semana se comporta como día festivo y 'N' en caso contrario.</li>
+        <li><span style="color:#FF0000;">Martes festivo</span>: Valor 'S' si el día de la semana se comporta como día festivo y 'N' en caso contrario.</li>
+        <li><span style="color:#FF0000;">Miércoles festivo</span>: Valor 'S' si el día de la semana se comporta como día festivo y 'N' en caso contrario.</li>
+        <li><span style="color:#FF0000;">Jueves festivo</span>: Valor 'S' si el día de la semana se comporta como día festivo y 'N' en caso contrario.</li>
+        <li><span style="color:#FF0000;">Viernes festivo</span>: Valor 'S' si el día de la semana se comporta como día festivo y 'N' en caso contrario.</li>
+        <li><span style="color:#FF0000;">Sábado festivo</span>: Valor 'S' si el día de la semana se comporta como día festivo y 'N' en caso contrario.</li>
+        <li><span style="color:#FF0000;">Domingo festivo</span>: Valor 'S' si el día de la semana se comporta como día festivo y 'N' en caso contrario.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos básicos del aplicativo.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV los datos básicos del aplicativo.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 934px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+          <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+           <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 70px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

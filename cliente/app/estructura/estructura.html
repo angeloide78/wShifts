@@ -1,0 +1,71 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Estructura organizativa" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de estructura organizativa. La estructura organizativa es una jerarquía arbórea de dependencia entre unidades organizativas, que en este mantenimiento se representa mediante las tuplas <<span style="color:#FF0000;">centro físico, servicio, equipo, puesto</span>>. Una tupla o relación es única, no pudiendo repetirse. Un centro físico se compone de uno o varios servicios. Cada servicio se compone de uno o varios equipos. Un equipo se compone de uno o varios puestos de trabajo.</h6>
+  <h5>Configuración</h5>
+    <h6>Una relación organizativa siempre se compone de un centro físico, servicio, equipo y puesto. De esta manera se puede crear una estructura organizativa completa de dependencia entre unidades organizativas o funcionales. En el grid del mantenimiento de estructura organizativa están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Cód. CF</span>: Define de forma unívoca el código del centro físico. Máximo de 5 caracteres. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Desc. CF</span>: Definición formal del centro físico. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Cód. Serv.</span>: Define de forma unívoca el código del servicio. Máximo de 5 caracteres. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Desc. Serv.</span>: Definición formal del servicio. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Cód. Eq.</span>: Define de forma unívoca el código del equipo de trabajo. Máximo de 5 caracteres. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Desc. Eq.</span>: Definición formal del equipo de trabajo. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Cód. Puesto</span>: Define de forma unívoca el código del puesto. Máximo de 5 caracteres. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Desc. Puesto</span>: Definición formal del puesto. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+        <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' la relación entre unidades organizativas estará visible para su uso (el puesto será visible), no estándolo si tiene valor 'N'.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todas las relaciones entre las unidades organizativas <span style="color:#FF0000;">centro físico, servicio, equipo, puesto</span> dadas de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de la estructura organizativa.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Se añade una nueva relación organizativa. Antes hay que seleccionar la tupla <span style="color:#FF0000;">centro físico, servicio, equipo, puesto</span>. Es obligatorio incluir todos los datos de la tupla.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina una relación de la estructura organizativa, siempre que el puesto no haya sido utilizado.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV toda la estructura organizativa presente en el grid.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1450px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+          <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+           <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+      <p-toolbar>
+        <span>Centro físico</span><p-dropdown [options]="cf" (onChange)="onChangeCF($event)"  [(ngModel)]="cf_sel" [style]="{'vertical-align':'middle','width':'500px'}" filter="filter"></p-dropdown>
+        <span>Servicio</span><p-dropdown [options]="sf" (onChange)="onChangeServicio($event)" [(ngModel)]="sf_sel" [style]="{'vertical-align':'middle','width':'500px'}" filter="filter"></p-dropdown>
+      </p-toolbar>
+      <p-toolbar>
+        <span>Equipo</span><p-dropdown [options]="eq" (onChange)="onChangeEquipo($event)" [(ngModel)]="eq_sel" [style]="{'vertical-align':'middle','width':'500px'}" filter="filter"></p-dropdown>
+        <span>Puesto</span><p-dropdown [options]="p" [(ngModel)]="p_sel" [style]="{'vertical-align':'middle','width':'500px'}" filter="filter"></p-dropdown>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

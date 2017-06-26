@@ -1,0 +1,40 @@
+wShifts - Gestión de turnos de trabajo, versión 0.0.4.
+Licencia Apache 2.0
+
+La aplicación se distribuye como código fuente, tanto la parte del cliente como la parte del servidor. A continuación se darán los pasos para arrancar los dos elementos. No se incluye como crear el "bundle" de la parte del cliente ya que depende de cada desarrollador esta tarea, si bien puede hacerse con ng, si se ha instalado angular-cli o con gulp y probablemente otras herramientas si se opta por SystemJS. La instalación se ha definido para sistemas Linux, basados en Ubuntu, aunque puede realizarse para otros sistemas, sin ningún problema. 
+
+# #######
+# Servidor
+# #######
+
+- Se debe de tener instalado el intérprete Python, versión 2.7. Para evitar problemas del tipo UnicodeDecodeError: 'ascii' codec can't decode byte 0x@@@ in position @@: ordinal not in range(128), hay que crear el fichero sitecustomize.py en la carpeta lib\site-packages donde esté instalado Python, con el siguiente contenido:
+
+import sys
+sys.setdefaultencoding('iso-8859-1')
+
+- Instalación de pip, mediante: sudo apt-get install python-pip python-dev build-essential
+
+- Instalación de Flask, mediante: pip install Flask
+
+- Instalación de Flask-cors, mediante: pip install -U flask-cors
+
+- Instalación de Requests, mediante: pip install requests
+
+- Instalación de SQLSoup, mediante: pip install sqlsoup
+
+Una vez instaladas todas las dependencias se ejecuta el servidor mediante: python services.py
+
+# ######
+# Cliente
+# ######
+
+- Instalación de nodejs -> Ir a la url https://nodejs.org/es/ y descargar la última versión de node. Se puede incluir un PPA a partir de la versión que se quiere instalar. Para ello ejecute:
+
+	curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
+	sudo bash nodesource_setup.sh
+
+	Y a continuación instale nodeJS normalmente mediante: sudo apt-get install nodejs
+
+- Instalación de manera opción de angular-cli.
+
+- Dentro de la carpeta del cliente ejecutar bien npm install, de manera que npm pueda leer el packages.json e instalar todas las dependencias o bien con la herramienta ng, creando un nuevo proyecto y copiando seguidamente la carpeta del código del cliente dentro de él. Si se hace esto se deberá volver a ejecutar npm install para que se lea packages.json y se puedan instalar todas las dependencias, tales como ag-grid o primeNG.

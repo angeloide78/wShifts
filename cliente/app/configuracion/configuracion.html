@@ -1,0 +1,84 @@
+<p-growl [value]="msgs"></p-growl>
+<p-tabView>
+  <p-tabPanel header="Estructura Organizativa" leftIcon="fa-sitemap">
+    <p-accordion>
+        <p-accordionTab header="Puestos">
+          <puesto></puesto>
+        </p-accordionTab>
+        <p-accordionTab header="Equipos">
+          <equipo></equipo>
+        </p-accordionTab>
+        <p-accordionTab header="Servicios">
+          <servicio></servicio>
+        </p-accordionTab>
+        <p-accordionTab header="Centros físicos">
+          <centro_fisico></centro_fisico>
+        </p-accordionTab>
+        <p-accordionTab header="Estructura organizativa">
+          <estructura></estructura>
+        </p-accordionTab>
+    </p-accordion>
+  </p-tabPanel>
+  <p-tabPanel header="Turno" leftIcon="fa-tumblr-square">
+    <p-panel header="Gestión de Turnos"  class='widget_horizontal'>
+      <turno></turno>
+    </p-panel>
+  </p-tabPanel>
+    <p-tabPanel header="Ciclo" leftIcon="fa-refresh">
+    <p-panel header="Gestión de ciclos"  class='widget_horizontal'>
+     <ciclo></ciclo>
+  </p-panel>
+    </p-tabPanel>
+<!--    <p-tabPanel header="Puestos" leftIcon="fa-key">
+    <p-panel header="Gestión de puestos" class='widget_horizontal'>
+      <p-accordion>
+          <p-accordionTab header="Ciclos">
+            <puesto_ciclo></puesto_ciclo>
+          </p-accordionTab>
+          <p-accordionTab header="Planificación">
+            <planificacion></planificacion>
+          </p-accordionTab>
+      </p-accordion>
+    </p-panel>
+  </p-tabPanel>-->
+      <p-tabPanel header="Coberturas de equipo" leftIcon="fa-group">
+        <p-panel header="Gestión de coberturas de equipo"  class='widget_horizontal'>
+          <cobertura_equipo></cobertura_equipo>
+        </p-panel>
+      </p-tabPanel>
+      <p-tabPanel header="Calendario" leftIcon="fa-calendar">
+        <p-panel header="Gestión de festivos"  class='widget_horizontal'>
+      <calendario-festivo></calendario-festivo>
+        </p-panel>
+      </p-tabPanel>
+      <p-tabPanel header="Jornada teórica" leftIcon="fa-flag-checkered">
+        <p-panel header="Jornada teórica"  class='widget_horizontal'>
+      <jornada_teorica></jornada_teorica>
+        </p-panel>
+      </p-tabPanel>
+      <p-tabPanel header="Cargos" leftIcon="fa-street-view">
+        <p-panel header="Gestión de cargos"  class='widget_horizontal'>
+      <cargo></cargo>
+        </p-panel>
+      </p-tabPanel>
+      <p-tabPanel header="Ausencias" leftIcon="fa-user-times">
+        <p-panel header="Gestión de tipos de ausencias"  class='widget_horizontal'>
+      <ausencia></ausencia>
+        </p-panel>
+      </p-tabPanel>
+      <p-tabPanel header="Categorías Profesionales" leftIcon="fa-contao">
+        <p-panel header="Gestión de categorías profesionales"  class='widget_horizontal'>
+      <categoria_profesional></categoria_profesional>
+        </p-panel>
+      </p-tabPanel>
+      <p-tabPanel header="Categorías por equipos" leftIcon="fa-tags">
+        <p-panel header="Relación de equipos de trabajo y categorías profesionales"  class='widget_horizontal'>
+      <categoria_equipo></categoria_equipo>
+        </p-panel>
+      </p-tabPanel>
+      <p-tabPanel header="Datos básicos" leftIcon="fa-puzzle-piece">
+        <p-panel header="Datos básicos de configuración de la aplicación"  class='widget_horizontal'>
+      <basica></basica>
+        </p-panel>
+      </p-tabPanel>
+</p-tabView>

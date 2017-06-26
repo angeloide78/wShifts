@@ -1,0 +1,66 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Ausencias" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de tipos de ausencias que se pueden asignar a contratos de trabajadores. Ausencias pueden ser "Vacaciones", "Asuntos Particulares", "Compensaciones Horarias", "Formación", "Incapacidad Temporal", etc.</h6>
+  <h5>Configuración</h5>
+    <h6>Una ausencia se define como la no realización de un turno de trabajo. No todas las ausencias se comportan de la misma manera, y es por ello que necesitan de una configuración específica atendiendo a su propia naturaleza. En el grid del mantenimiento de ausencias están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Código</span>: Define de forma unívoca a una ausencia. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Descripción</span>: Definición formal de la ausencia. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Horas</span>: Si tiene el valor 'S' esta ausencia contará las horas del turno como trabajadas, es decir, estas horas de ausencia contarán como horas trabajadas del trabajador. Si tiene valor 'N' estas horas no computarán como horas trabajadas. Así por ejemplo la ausencia "Vacaciones" no debería contar horas. Sin embargo una ausencia de tipo "Compensación Horaria" si debería contar horas, ya que está compensando la ausencia de esas horas por otros motivos, como por ejemplo un exceso de jornada.</li>
+        <li><span style="color:#FF0000;">Días</span>: Si tiene el valor 'S' significa que se contarán los días de ausencia como trabajados. Esto afecta a la cobertura del servicio, ya que para dicha cobertura el trabajador sigue en su puesto de trabajo aunque esté de ausencia. Si tiene valor 'N' no se contarán como trabajados. Una ausencia de "Asuntos propios sin retribución" no debería de contar como días trabajados, sin embargo la ausencia "Accidente" si debería contar los días como trabajados.</li>
+        <li><span style="color:#FF0000;">Tope de días</span>: Es el número máximo de días que se puede tomar esta ausencia en un año natural.</li>
+        <li><span style="color:#FF0000;">Activar tope de días</span>: Si tiene valor 'S' indica que se activa el límite de tope de días de ausencia. El sistema, para los contratos de un trabajador en un año natural, controlará que el número de ausencias no sobrepase lo indicado en el tope de días de ausencia. Si tiene valor 'N' este control no se realizará.</li>
+        <li><span style="color:#FF0000;">Forzar ausencia</span>: Si tiene el valor 'N' cuando el número de ausencias por trabajador supere el tope de días la ausencia no podrá insertarse. Si tiene el valor 'S' se advertirá de que la ausencia ha sobrepasado el límite, pero podrá dejar insertarla a criterio del usuario.</li>
+        <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+        <li><span style="color:#FF0000;">Devengo anterior</span>: Forma de comportarse una ausencia con respecto al conteo de horas de la actividad de la que se ausenta cuando el año de devengo sea anterior al año actual en curso.</li>
+        <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' el tipo de ausencia podrá utilizarse para ser insertada en contratos. Si tiene valor 'N' el tipo de ausencia no podrá asignarse a ningún contrato.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los tipos de ausencias que hay actualmente dados de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de tipos de ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Añade un nuevo tipo de ausencia al sistema. Se tiene que incluir obligatoriamente el código y descripción del tipo de ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina el tipo de ausencia del sistema. Si el tipo de ausencia ya está asignado a un contrato no podrá borrarse del sistema. En este caso, si no quiere utilizarlo desactívelo.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los tipos de ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1420px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+           <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+           <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+      <p-toolbar>
+        <span>Estado de devengo</span><p-dropdown [options]="estado_devengo" (onChange)="onChangeEstadoDevengo($event)" [(ngModel)]="estado_devengo_sel" [style]="{'vertical-align':'middle','width':'510px'}" filter="filter"></p-dropdown>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

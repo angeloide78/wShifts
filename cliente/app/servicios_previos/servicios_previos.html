@@ -1,0 +1,52 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Servicios Previos" [(visible)]="display" modal="false" width="900" responsive="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de servicios previos. Un servicio previo son unas horas que ha trabajado un trabajador en un año. Los servicios previos van ligados a un trabajador y se pueden utilizar para controlar las horas que un trabajador ha trabajado fuera del sistema, y que es necesario tener en cuenta para su cómputo global de horas. Los servicios previos también pueden servir para incluir las horas que el trabajador debe a la empresa o las horas que la empresa debe al trabajador, y que se restarán o sumarán al total de horas trabajadas.</h6>
+  <h5>Configuración</h5>
+    <h6>En el grid del mantenimiento de servicios previos están los campos:
+      <ul>
+       <li><span style="color:#FF0000;">Año</span>: Define el año en el que se contarán los servicios previos. Dato obligatorio.</li>
+       <li><span style="color:#FF0000;">Horas</span>: Número de horas trabajadas que tendrá el trabajador en ese año.</li>
+       </ul>
+   </h6>
+  <h5>Uso</h5>
+  <h6>
+    <ul>
+      <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de los servicios previos.</li>
+      <li><span style="color:#FF0000;">Botón Insertar</span>: Añade un nuevo servicio previo al trabajador.</li>
+      <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina el servicio previo del trabajador.</li>
+      <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+      <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los servicios previos del trabajador.</li>
+      <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+    </ul>
+  </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 800px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+           <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

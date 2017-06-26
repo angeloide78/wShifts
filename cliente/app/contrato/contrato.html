@@ -1,0 +1,111 @@
+<div #actualTarget></div>
+<p-growl [value]="msgs"></p-growl>
+<p-dialog header="Contratos" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de contratos de trabajadores. En este mantenimiento se recogen los contratos asociados al trabajador seleccionado en la opción <span style="color:#FF0000;">Búscar trabajadores</span>. Cada contrato tiene unas ausencias asociadas, que pueden gestionarse haciendo click en el botón <span style="color:#FF0000;">Ausencias</span>.</h6>
+  <h5>Configuración</h5>
+    <h6>Un contrato de trabajo está compuesto por el cargo que desempeñará el trabajador, la fecha de inicio y fin de contrato, la categoría profesional asociada al puesto y si se permite que el contrato se solape temporalmente (entre fechas) con otro contrato que ya tenga abierto el trabajador. En el grid del mantenimiento de contratos están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Cargo</span>: Cargo que desempeñará el trabajador en su puesto. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Desde</span>: Fecha de inicio del contrato.</li>
+        <li><span style="color:#FF0000;">Hasta</span>: Fecha de finalización del contrato.</li>
+        <li><span style="color:#FF0000;">Categoría profesional</span>: Categoría profesional del trabajador.</li>
+        <li><span style="color:#FF0000;">Solapado</span>: Si su valor es 'S' se permite que el contrato se solape con cualquier otro. Si es 'N' no se permite solapamiento con otros contratos.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en el contrato.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Inserta un nuevo contrato asociado al trabajador seleccionado.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Borra los contratos seleccionados. Si el contrato tiene tareas asociadas no se podrá eliminar.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV los contratos del trabajador.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<p-dialog header="Ausencias en contratos" [(visible)]="display2" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Opción de mantenimiento de ausencias de trabajadores asignadas a contrato. Un contrato está ligado a un trabajador y dicho trabajador puede tener ausencias, esto es, puede ausentarse de su puesto de trabajo a partir de tener un contrato con la empresa.</h6>
+  <h5>Configuración</h5>
+    <h6>Una ausencia se define como la no realización de un turno de trabajo. El trabajador estará ausente entre un rango de fechas, pudiendo devengar ausencias en años diferentes al actual, como por ejemplo en el caso de tener vacaciones pendientes de un año y disfrutarlas en el siguiente año. En el grid del mantenimiento de ausencias asignadas a contrato están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Cód.</span>: Define de forma unívoca a una ausencia. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Descripción</span>: Definición formal de la ausencia. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Desde</span>: Fecha de inicio de la ausencia. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Hasta</span>: Fecha de finalización de la ausencia. Como máximo será el último día del año de inicio de la ausencia. No se permiten ausencias que empiecen y finalicen en años diferentes. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Año devengo</span>: Año donde se devengan las horas de la ausencia.</li>
+        </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de la ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Añade una nueva ausencia al contrato del trabajador.  cluir obligatoriamente el código y descripción del tipo de ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina el tipo de ausencia del sistema. Si el tipo de ausencia ya está asignado a un contrato no podrá borrarse del sistema. En este caso, si no quiere utilizarlo desactívelo.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los tipos de ausencia.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display2=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="align: center;width: 1060px;">
+  <div style="padding: 10px;" class="toolbar">
+    <p-toolbar>
+         <button pButton type="button" icon="fa-floppy-o"
+         iconPos="left" (click)="guardar()" label="Guardar"></button>
+         <button pButton type="button" icon="fa-plus"
+         iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+         <button pButton type="button" icon="fa-minus"
+         iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+         <button pButton type="button" icon="fa-undo"
+         iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+         <div class="ui-toolbar-group-right">
+         <i class="fa fa-bars"></i>
+         <button type="text" icon="fa-user-times" pButton styleClass="ui-button-info" label="Ausencias" (click)="op.show($event, actualTarget)" [disabled]="boton_actualizar"></button>
+         <button type="text" (click)="showDialog2()" pButton icon="fa-info" label="Info"></button>
+         <i class="fa fa-bars"></i>
+         <button pButton type="button" icon="fa-file-excel-o"
+         iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+         <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+       </div>
+    </p-toolbar>
+    <p-toolbar>
+      <button pButton type="button" icon="fa-street-view"
+      iconPos="left" (click)="insertarCargo()" label="Cargo"></button><p-dropdown [options]="cargo" [(ngModel)]="cargo_sel" [style]="{'vertical-align':'middle','width':'300px'}" filter="filter"></p-dropdown>
+      <button pButton type="button" icon="fa-contao"
+      iconPos="left" (click)="insertarCP()" label="Categoría Profesional"></button>
+      <p-dropdown [options]="cp" [(ngModel)]="cp_sel" [style]="{'vertical-align':'middle','width':'300px'}" filter="filter"></p-dropdown>
+    </p-toolbar>
+    <p-toolbar>
+      <p-overlayPanel #op [dismissable]="false" [showCloseIcon]="true">
+          <contrato_ausencia [contratoSel]="contratoSel"></contrato_ausencia>
+      </p-overlayPanel>
+      <button pButton type="button" icon="fa-calendar"
+      iconPos="left" (click)="insertarFechaDesde()" label="Desde"></button>
+      <p-calendar margin="10" styleClass="calendario2" [(ngModel)]="fecha_desde" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+      <button pButton type="button" icon="fa-calendar"
+      iconPos="left" (click)="insertarFechaHasta()" label="Hasta"></button>
+      <p-calendar styleClass="calendario2" [(ngModel)]="fecha_hasta" [readonlyInput]="true" [locale]="es" dateFormat="dd/mm/yy" ></p-calendar>
+
+    </p-toolbar>
+  </div>
+  <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+               [gridOptions]="gridOptions" [rowData] = 'rowData'
+               (cellValueChanged)="onCellValueChanged($event)"
+               (rowClicked)="onRowClicked($event)"
+               (rowSelected)="onRowSelected($event)"
+               (rowDataChanged)="onRowDataChanged($event)">
+  </ag-grid-ng2>
+</div>

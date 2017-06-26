@@ -1,0 +1,22 @@
+<form class="form-inline">
+  <div style="text-align: center">
+  <img src="app/images/logo_wShifts.jpg"
+    alt="Logo wShifts"
+    style="width:25%;height:45%;padding:20px;">
+  </div>
+  <div class="login">
+    <span style="color:white"for="nick">Usuario:</span><input class="form-control" name="nick" #username>
+    <span style="color:white" for="password">Contraseña:</span><input class="form-control" type="password" name="password" #password>
+  </div>
+  <div style="text-align:center;">
+    <a style="color:white" (click)="login(username.value, password.value)">Abrir sesión de usuario</a><br/>
+    <a style="color:white" (click)="logout()">Cerrar sesión de usuario</a>
+  </div>
+  <div style="text-align:center;" *ngIf="authService.data?.existe">
+    <p  hidden>{{ authService.setUser(username.value) }}</p>
+    <span style="color:yellow;text-align:center;">Usuario activo en el sistema</span><br/>
+  </div>
+  <div style="text-align:center;" *ngIf="!authService.data?.existe">
+    <b><span style="color:red;text-align: center;"> {{ authService.data?.msj }}</span></b>
+  </div>
+</form>

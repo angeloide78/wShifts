@@ -1,0 +1,46 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Selección de trabajador" [(visible)]="display" modal="false" width="900" responsive="true">
+  <h5>Descripción</h5>
+    <h6>Búsqueda y selección de trabajador para gestión de sus datos personales, servicios previos, contratos y ausencias asociadas.</h6>
+  <h5>Configuración</h5>
+  <h6>Recupere todos los trabajadores y realice una búsqueda específica por los filtros de las columnas. En el grid del resultado de búsqueda de trabajadores están los campos:
+    <ul>
+      <li><span style="color:#FF0000;">Documento</span>: Es el documento identificativo de la persona o trabajador, como DNI. Dato obligatorio.</li>
+      <li><span style="color:#FF0000;">Nombre</span>: Nombre del trabajador. Dato obligatorio.</li>
+      <li><span style="color:#FF0000;">Primer apellido</span>: Primer apellido del trabajador. Dato obligatorio.</li>
+      <li><span style="color:#FF0000;">Segundo apellido</span>: Segundo apellido del trabajador.</li>
+    </ul>
+  </h6>
+  <h5>Uso</h5>
+  <h6>
+    <ul>
+      <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los trabajadores que hay actualmente dados de alta en el sistema.</li>
+      <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV el contenido de los trabajadores.</li>
+      <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+    </ul>
+  </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 690px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+        <button pButton type="button" icon="fa-repeat"
+        iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+        <div class="ui-toolbar-group-right">
+          <i class="fa fa-bars"></i>
+          <button pButton type="button" icon="fa-file-excel-o"
+          iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+          <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+    </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)"
+                 (rowClicked)="onRowClicked($event)">
+    </ag-grid-ng2>
+</div>

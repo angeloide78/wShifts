@@ -1,0 +1,109 @@
+body {margin:0;
+background-color:#10679F;}
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #10679F;
+}
+
+ul.topnav li a {
+  display: inline-block;
+  color: #f2f2f2;
+  text-align: left;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 23px;
+  border-right: 1px solid #bbb;
+}
+
+ul.topnav li a:hover {background-color: #555;}
+
+ul.topnav li.icon {display: none;}
+
+/* Main content */
+.main_wShifts {
+    margin-top: 0px;
+    background-color:#10679F;
+}
+
+.login {
+  margin: 1rem;
+  padding: 1rem;
+  border: 2px solid #ccc;
+  text-align: center;
+}
+
+.contenedor
+{
+  overflow:hidden ;
+  float: center ;
+  width: auto;
+  display: center;
+  background-color:#10679F;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin: 0 auto;
+}
+
+.Implementation {
+    background-color: #FFFFFF;
+    overflow: visible;
+}
+
+.ContentSideSections {
+    display: block;
+    border-bottom: solid 1px #dde3e6;
+    padding: 30px;
+    overflow: hidden;
+    background-color: #f5f7f8;
+}
+
+/* ALGG 17-10-2016
+   Modificación: Override de CSS de ui-tabview, para dejar espacio entre el menú y los tabs.
+*/
+
+.ui-tabview.ui-tabview-top>.ui-tabview-nav {
+    padding: .2em .2em 0;
+    margin-top: 0;
+}
+
+.widget_horizontal {
+margin-top: 20px ;
+overflow:hidden ;
+float: left;
+width: auto;
+display: center;
+/*display: inline-block;*/
+}
+
+.widget_horizontal2 {
+margin-top: 1px ;
+overflow:hidden ;
+float: left;
+width: auto;
+display: center;
+/*display: inline-block;*/
+}
+
+.calendario input {
+  width: 0px ;
+  /*margin-top:0px ;*/
+  background-color: transparent;
+      border: 0px;
+      outline: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      color:transparent;
+      cursor:default;
+}
+
+.calendario2 input {
+  width: 100px ;
+  /*margin-top:0px ;*/
+  background-color: transparent;
+}

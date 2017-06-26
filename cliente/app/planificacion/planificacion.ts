@@ -1,0 +1,61 @@
+/*
+
+ALGG 18-12-2016 Definición de clase Planificacion.
+
+*/
+
+export class Planificacion {
+  constructor(
+    public id: number,
+    public mes: number,
+    public anno: number,
+    public puesto_id: number,
+    public puesto_cod: string,
+    public puesto_desc: string,
+    public fecha_inicio: string,
+    public ciclo_master_id: number,
+    public fecha_fin: string,
+    public total_dias: number,
+    public semana: number,
+    public dia1: number,
+    public dia2: number,
+    public dia3: number,
+    public dia4: number,
+    public dia5: number,
+    public dia6: number,
+    public dia7: number,
+    public dia8: number,
+    public dia9: number,
+    public dia10: number,
+    public dia11: number,
+    public dia12: number,
+    public dia13: number,
+    public dia14: number,
+    public dia15: number,
+    public dia16: number,
+    public dia17: number,
+    public dia18: number,
+    public dia19: number,
+    public dia20: number,
+    public dia21: number,
+    public dia22: number,
+    public dia23: number,
+    public dia24: number,
+    public dia25: number,
+    public dia26: number,
+    public dia27: number,
+    public dia28: number,
+    public dia29: number,
+    public dia30: number,
+    public dia31: number,
+    public es_lunes_festivo: string,
+    public es_martes_festivo: string,
+    public es_miercoles_festivo: string,
+    public es_jueves_festivo: string,
+    public es_viernes_festivo: string,
+    public es_sabado_festivo: string,
+    public es_domingo_festivo: string,
+    public turno_libre_id: number,
+    public festivos: string
+  ) { }
+}

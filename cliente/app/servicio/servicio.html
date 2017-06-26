@@ -1,0 +1,60 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Servicios" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de servicios. Un servicio es la unidad organizativa de segundo nivel que está asignado a un único centro físico, y que está compuesto por uno o varios equipos de trabajo. Así un servicio tiene por finalidad la realización de una subrutina específica de trabajo para la entidad empresarial. Servicios pueden ser Informática, Urgencias, Mantenimiento, Administración, etc.</h6>
+  <h5>Configuración</h5>
+    <h6>Un servicio es la unidad en la que se divide un centro físico, definiéndose por su propia funcionalidad. En el grid del mantenimiento de servicios están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Código</span>: Define de forma unívoca a un servicio. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Descripción</span>: Definición formal del servicio. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' el servicio estará visible para su uso. Si tiene valor 'N' el servicio no estará disponible.</li>
+        <li><span style="color:#FF0000;">1er teléfono</span>: Primer teléfono de contacto con el servicio.</li>
+        <li><span style="color:#FF0000;">2do teléfono</span>: Segundo teléfono de contacto con el servicio.</li>
+        <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+        <li><span style="color:#FF0000;">e-mail</span>: Correo electrónico de contacto con el servicio.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los servicios que hay actualmente dados de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de servicios.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Añade un nuevo servicio al sistema. Se tiene que incluir obligatoriamente el código y descripción del servicio. El código y descripción del servicio debe de ser único, no pudiendo haber servicios con mismo código o descripción.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina un servicio, siempre que no tenga equipos de trabajo que dependan de él.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV todos los datos relacionados con los servicios que están presentes en el grid.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1420px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+           <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+           <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>

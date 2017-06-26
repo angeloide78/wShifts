@@ -1,0 +1,60 @@
+<p-growl [value]="msgs" life="5000"></p-growl>
+<p-dialog header="Puestos" [(visible)]="display" modal="true" width="900" rezisable="true">
+  <h5>Descripción</h5>
+    <h6>Mantenimiento de puestos. Un puesto es la unidad organizativa de cuarto nivel que está asignada a un único equipo de trabajo. Un puesto de trabajo lo ocupará una persona (trabajador) para el desempeño de sus funciones. Puede haber tantos puestos como requiera la cobertura de servicio para un equipo de trabajo en concreto.</h6>
+  <h5>Configuración</h5>
+    <h6>Un puesto es la unidad en la que se divide un equipo de trabajo. En el grid del mantenimiento de puestos están los campos:
+      <ul>
+        <li><span style="color:#FF0000;">Código</span>: Define de forma unívoca a un puesto. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Descripción</span>: Definición formal del puesto. Dato obligatorio.</li>
+        <li><span style="color:#FF0000;">Activo</span>: Si tiene valor 'S' el puesto estará visible para su uso. Si tiene valor 'N' el puesto no estará disponible.</li>
+        <li><span style="color:#FF0000;">1er teléfono</span>: Primer teléfono de contacto del puesto.</li>
+        <li><span style="color:#FF0000;">2do teléfono</span>: Segundo teléfono de contacto del puesto.</li>
+        <li><span style="color:#FF0000;">Observaciones</span>: Texto libre.</li>
+        <li><span style="color:#FF0000;">e-mail</span>: Correo electrónico de contacto del puesto.</li>
+      </ul>
+    </h6>
+  <h5>Uso</h5>
+    <h6>
+      <ul>
+        <li><span style="color:#FF0000;">Botón Recuperar</span>: Recupera todos los puestos que hay actualmente dados de alta en el sistema.</li>
+        <li><span style="color:#FF0000;">Botón Guardar</span>: Guarda los cambios que se hayan realizado en los datos de los puestos.</li>
+        <li><span style="color:#FF0000;">Botón Insertar</span>: Añade un nuevo puesto al sistema. Se tiene que incluir obligatoriamente el código y descripción del puesto. El código y descripción del puesto debe de ser único, no pudiendo haber puestos con mismo código o descripción.</li>
+        <li><span style="color:#FF0000;">Botón Borrar</span>: Elimina un puesto, siempre que no haya sido utilizado.</li>
+        <li><span style="color:#FF0000;">Botón Cancelar</span>: Cancela todas las operaciones realizadas desde la última vez que se guardaron los datos. Por defecto la cancelación hace que se recuperen los últimos datos guardados.</li>
+        <li><span style="color:#FF0000;">Botón Exportar</span>: Exporta a un fichero en formato CSV todos los datos relacionados con los puestos que están presentes en el grid.</li>
+        <li><span style="color:#FF0000;">Botón Info</span>: Esta ayuda.</li>
+      </ul>
+    </h6>
+<footer>
+  <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+    <button type="button" pButton icon="fa-hand-spock-o" (click)="display=false" label="Aceptar"></button>
+  </div>
+</footer>
+</p-dialog>
+<div style="width: 1300px;">
+    <div style="padding: 10px;" class="toolbar">
+      <p-toolbar>
+           <button pButton type="button" icon="fa-repeat"
+           iconPos="left" (click)="recuperar()" label="Recuperar"></button>
+           <button pButton type="button" icon="fa-floppy-o"
+           iconPos="left" (click)="guardar()" label="Guardar"></button>
+           <button pButton type="button" icon="fa-plus"
+           iconPos="left" (click)="insertarFila()" label="Insertar"></button>
+           <button pButton type="button" icon="fa-minus"
+           iconPos="left" (click)="borrarFilaSeleccionada()" label="Borrar"></button>
+           <button pButton type="button" icon="fa-undo"
+           iconPos="left" (click)="cancelarEdicion()" label="Cancelar"></button>
+           <div class="ui-toolbar-group-right">
+           <i class="fa fa-bars"></i>
+           <button pButton type="button" icon="fa-file-excel-o"
+           iconPos="left" (click)="exportarCSV()" label="Exportar"></button>
+        <button type="text" (click)="showDialog()" pButton icon="fa-info" label="Info"></button>
+         </div>
+      </p-toolbar>
+   </div>
+    <ag-grid-ng2 #agGrid  style="width: 100%; height: 400px;" class="ag-fresh"
+                 [gridOptions]="gridOptions" [rowData] = 'rowData'
+                 (cellValueChanged)="onCellValueChanged($event)">
+    </ag-grid-ng2>
+</div>
